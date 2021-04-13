@@ -1,7 +1,8 @@
 <template>
   <div class="container">
-    <p>{{ resImage.primaryImage }}</p>
-     <p>{{ randomId }}</p>
+    <div style="position:absolute; color: white;">
+      <p>{{ resImage.title }}</p>
+    </div>
     <div class="primaryImage" :style="{'background-image': 'url(' + resImage.primaryImage + ')'}" />
   </div>
 </template>
@@ -49,6 +50,7 @@ export default {
 
 <style>
 .primaryImage {
+  padding-top: 2rem;
   width: 100vw;
   height: 100vh;
   background-position: center;
