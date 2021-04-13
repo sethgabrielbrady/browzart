@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <p>{{resImage.primaryImage}}</p>
-     <p>{{randomId}}</p>
+    <p>{{ resImage.primaryImage }}</p>
+     <p>{{ randomId }}</p>
     <div class="primaryImage" :style="{'background-image': 'url(' + resImage.primaryImage + ')'}" />
   </div>
 </template>
@@ -13,23 +13,36 @@ export default {
   data () {
     return {
       resImage: 'Initial State',
-      randomId: ''
+      randomId: 0,
+      newId: 0
     }
   },
   created () {
-    this.randomId = this.rngId(47213)
-    return this.getPrimaryImage()
+    return this.process();
   },
   methods: {
-    async getPrimaryImage () {
-      const resArt = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/objects/' + this.randomId)
-      this.resImage = resArt.data
+     async getPrimaryImage (id) {
+      if( this.randomId > 0){
+        const resArt = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/objects/' + id)
+        console.log("Art", resArt)
+        this.resImage = resArt.data
+      }
+    },
+    async getRandomId () {
+      const resId = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/objects')
+      console.log("id", resId.data.total)
+      return resId.data.total
     },
     rngId (max) {
-      const newId = Math.floor(Math.random() * max);
-      return newId.toString();
-    }
-
+      const id = Math.floor(Math.random() * max);
+      console.log("randomId", id)
+      return id
+    },
+    async process () {
+      this.newId =  await this.getRandomId()
+      this.randomId = this.rngId(this.newId)
+      return this.getPrimaryImage(this.randomId.toString())
+    },
   }
 }
 </script>
