@@ -21,26 +21,40 @@ export default {
   created () {
     return this.process();
   },
+  //move getting and image to isolated component
+  //add spinner component
   methods: {
-     async getPrimaryImage (id) {
+    async getPrimaryImage (id) {
       if( this.randomId > 0){
         const resArt = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/objects/' + id)
-        console.log("Art", resArt)
-        this.resImage = resArt.data
+        console.log("Art", resArt.status)
+        if (resArt.data.primaryImage === '') {
+          console.log("No image-reset")
+          this.process();
+        }else {
+          this.resImage = resArt.data
+        }
       }
     },
     async getRandomId () {
       const resId = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/objects')
-      console.log("id", resId.data.total)
-      return resId.data.total
+      console.log("id", resId.status)
+      //TODO - check for bad response
+      if (resId.status ==! 200){
+        console.log("Xid", resId.status)
+        this.process();
+      }else {
+        return resId.data.total
+      }
     },
     rngId (max) {
+      //combine into getRandomId()
       const id = Math.floor(Math.random() * max);
       console.log("randomId", id)
       return id
     },
     async process () {
-      this.newId =  await this.getRandomId()
+      this.newId = await this.getRandomId()
       this.randomId = this.rngId(this.newId)
       return this.getPrimaryImage(this.randomId.toString())
     },
