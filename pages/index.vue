@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <div style="position:absolute; color: white;">
-      <p>{{ resImage.title }}</p>
+      <p>{{ resImage.title }}</p><br>
+      <p>{{ resImage.artistDisplayName}}</p>
     </div>
     <div class="primaryImage" :style="{'background-image': 'url(' + resImage.primaryImage + ')'}" />
   </div>
@@ -26,25 +27,25 @@ export default {
   methods: {
     async getPrimaryImage (id) {
       if( this.randomId > 0){
-        const resArt = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/objects/' + id)
-        console.log("Art", resArt.status)
-        if (resArt.data.primaryImage === '') {
+        const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/objects/' + id)
+        console.log("Art", response.status)
+        if (response.data.primaryImage === '') {
           console.log("No image-reset")
           this.process();
         }else {
-          this.resImage = resArt.data
+          this.resImage = response.data
         }
       }
     },
     async getRandomId () {
-      const resId = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/objects')
-      console.log("id", resId.status)
+      const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/search?q=hasImages')
+      console.log("id", response.status)
       //TODO - check for bad response
-      if (resId.status ==! 200){
-        console.log("Xid", resId.status)
+      if (response.status ==! 200){
+        console.log("Xid", response.status)
         this.process();
       }else {
-        return resId.data.total
+        return response.data.total
       }
     },
     rngId (max) {
@@ -59,6 +60,7 @@ export default {
       return this.getPrimaryImage(this.randomId.toString())
     },
   }
+  //add favorites
 }
 </script>
 
