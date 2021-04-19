@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div style="position:absolute; color: white;">
+    <div class="infobox">
       <p>{{ resImage.title }}</p><br>
       <p>{{ resImage.artistDisplayName}}</p>
     </div>
@@ -65,6 +65,16 @@ export default {
 </script>
 
 <style>
+.infobox {
+  position:absolute;
+  opacity: 0;
+  width: 100%;
+}
+.infobox:hover {
+  color: white;
+  background-color: black;
+  opacity: 1;
+}
 .primaryImage {
   padding-top: 2rem;
   width: 100vw;
