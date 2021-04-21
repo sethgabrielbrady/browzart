@@ -1,27 +1,35 @@
 <template>
-  <div class="container">
-    <div class="infobox">
-      <p>{{ resImage.title }}</p><br>
-      <p>{{ resImage.artistDisplayName}}</p>
-       <p>{{ resImage.artistDidsplayBio}}</p>
-        <p>{{ resImage.artistBeginDate + " to " + resImage.artistEndDate}}</p>
-      <p>{{ resImage.department}}</p>
-      <p>{{ resImage.period}}</p>
-      <p>{{ resImage.artistRole}}</p>
+  <div>
+    <div class="container">
+      <div class="infobox">
+        <p>{{ resImage.title }}</p><br>
+        <p>{{ resImage.artistDisplayName}}</p>
+        <p>{{ resImage.artistDidsplayBio}}</p>
+          <p>{{ resImage.artistBeginDate + " to " + resImage.artistEndDate}}</p>
+        <p>{{ resImage.department}}</p>
+        <p>{{ resImage.period}}</p>
+        <p>{{ resImage.artistRole}}</p>
+      </div>
+      <div class="primaryImage" :style="{'background-image': 'url(' + resImage.primaryImage + ')'}" />
     </div>
-    <div class="primaryImage" :style="{'background-image': 'url(' + resImage.primaryImage + ')'}" />
+    <base-spinner v-if="isLoading" />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import BaseSpinner from '../components/BaseSpinner.vue'
 
 export default {
+  component: {
+    BaseSpinner
+  },
   data () {
     return {
       resImage: 'Initial State',
       randomId: 0,
-      newId: 0
+      newId: 0,
+      isLoading: false
     }
   },
   created () {
@@ -36,15 +44,17 @@ export default {
         const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/objects/' + id)
         console.log("Art", response.status)
         if (response.data.primaryImage === '') {
+          this.isLoading = true;
           console.log("No image-reset")
           this.process();
         }else {
           this.resImage = response.data
+          this.isLoading = false;
         }
       }
     },
     async getRandomId () {
-      const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/search?q=sculpture')
+      const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/search?q=French')
       console.log("status", response.status)
       //TODO - check for bad response
       if (response.status ==! 200){
@@ -65,11 +75,12 @@ export default {
       return id
     },
     async process () {
+      this.isLoading = true;
       this.newId = await this.getRandomId()
       // this.randomId = this.rngId(this.newId)
       this.randomId = this.newId
       return this.getPrimaryImage(this.randomId.toString())
-    },
+    }
   }
   //add favorites
 }
