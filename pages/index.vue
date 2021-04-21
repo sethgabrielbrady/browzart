@@ -3,6 +3,11 @@
     <div class="infobox">
       <p>{{ resImage.title }}</p><br>
       <p>{{ resImage.artistDisplayName}}</p>
+       <p>{{ resImage.artistDidsplayBio}}</p>
+        <p>{{ resImage.artistBeginDate + " to " + resImage.artistEndDate}}</p>
+      <p>{{ resImage.department}}</p>
+      <p>{{ resImage.period}}</p>
+      <p>{{ resImage.artistRole}}</p>
     </div>
     <div class="primaryImage" :style="{'background-image': 'url(' + resImage.primaryImage + ')'}" />
   </div>
@@ -27,6 +32,7 @@ export default {
   methods: {
     async getPrimaryImage (id) {
       if( this.randomId > 0){
+        console.log("passed id", id)
         const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/objects/' + id)
         console.log("Art", response.status)
         if (response.data.primaryImage === '') {
@@ -38,14 +44,18 @@ export default {
       }
     },
     async getRandomId () {
-      const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/search?q=hasImages')
-      console.log("id", response.status)
+      const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/search?q=sculpture')
+      console.log("status", response.status)
       //TODO - check for bad response
       if (response.status ==! 200){
         console.log("Xid", response.status)
         this.process();
       }else {
-        return response.data.total
+        console.log("something", response.data.objectIDs)
+        const Arrayid = this.rngId (response.data.objectIDs.length)
+        console.log("newID", Arrayid)
+        console.log("arr",response.data.objectIDs[Arrayid] )
+        return response.data.objectIDs[Arrayid]
       }
     },
     rngId (max) {
@@ -56,7 +66,8 @@ export default {
     },
     async process () {
       this.newId = await this.getRandomId()
-      this.randomId = this.rngId(this.newId)
+      // this.randomId = this.rngId(this.newId)
+      this.randomId = this.newId
       return this.getPrimaryImage(this.randomId.toString())
     },
   }
