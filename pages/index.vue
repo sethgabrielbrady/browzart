@@ -5,10 +5,12 @@
         <p>{{ resImage.title }}</p><br>
         <p>{{ resImage.artistDisplayName}}</p>
         <p>{{ resImage.artistDidsplayBio}}</p>
-          <p>{{ resImage.artistBeginDate + " to " + resImage.artistEndDate}}</p>
+        <p>{{ resImage.artistBeginDate + " to " + resImage.artistEndDate}}</p>
         <p>{{ resImage.department}}</p>
         <p>{{ resImage.period}}</p>
         <p>{{ resImage.artistRole}}</p>
+        <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
+        <button @click="process">Search</button>
       </div>
       <div class="primaryImage" :style="{'background-image': 'url(' + resImage.primaryImage + ')'}" />
     </div>
@@ -29,7 +31,8 @@ export default {
       resImage: 'Initial State',
       randomId: 0,
       newId: 0,
-      isLoading: false
+      isLoading: false,
+      searchValue: "paintings"
     }
   },
   created () {
@@ -54,7 +57,7 @@ export default {
       }
     },
     async getRandomId () {
-      const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/search?q=French')
+      const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/search?q='+ this.searchValue)
       console.log("status", response.status)
       //TODO - check for bad response
       if (response.status ==! 200){
@@ -80,6 +83,10 @@ export default {
       // this.randomId = this.rngId(this.newId)
       this.randomId = this.newId
       return this.getPrimaryImage(this.randomId.toString())
+    },
+    getSearchValue () {
+      console.log("Searchvalue", this.searchValue)
+      return this.searchValue;
     }
   }
   //add favorites
