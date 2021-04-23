@@ -110,20 +110,23 @@ export default {
   opacity: 1;
   border-radius: 12px;
   margin: 1rem;
-  width: 30vw;
+  width: 20vw;
   padding: 1em;
   color: white;
   background-image: linear-gradient(to right, rgba(0,0,0,.65), rgba(255,255,255,.15));
   -webkit-box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
   box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
   font-size: 1em;
-  left: calc(-30vw);
-  transition: opacity 200ms, left 200ms, background-image 200ms;
+  left: calc(-20vw);
+  transition: opacity 200ms, left 300ms, background-image 200ms;
+  height: 180px;
  }
 
 .infobox:hover {
+  min-width: 20vw;
+  max-width: max-content;
   background-image: linear-gradient(to right, rgba(0,0,0,.65), rgba(0,0,0,.15));
-  transition: opacity 200ms, left 200ms, background-image 1000ms;
+  transition: opacity 200ms, left 300ms, background-image 1000ms;
   left: calc(0vw - 1em);
   opacity: 1;
 }
