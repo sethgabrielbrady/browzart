@@ -2,13 +2,12 @@
   <div>
     <div class="container">
       <div class="infobox">
-        <p>{{ resImage.title }}</p><br>
-        <p>{{ resImage.artistDisplayName}}</p>
-        <p>{{ resImage.artistDidsplayBio}}</p>
-        <p>{{ resImage.artistBeginDate + " to " + resImage.artistEndDate}}</p>
-        <p>{{ resImage.department}}</p>
-        <p>{{ resImage.period}}</p>
-        <p>{{ resImage.artistRole}}</p>
+        <p v-if="resImage.title" style="font-style:italic; padding-bottom:.5em;">{{ resImage.title }}</p>
+        <p v-if="resImage.artistDisplayName">{{ resImage.artistRole +": " + resImage.artistDisplayName}}</p>
+        <p v-else>Artist: unknown</p>
+        <p v-if="resImage.artistDidsplayBio">{{ resImage.artistDidsplayBio}}</p>
+        <p v-if="resImage.department">{{ "Dept: " + resImage.department}}</p>
+        <p v-if="resImage.period">{{ resImage.period}}</p><br>
         <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
         <button @click="process">Search</button>
       </div>
@@ -38,8 +37,6 @@ export default {
   created () {
     return this.process();
   },
-  //move getting and image to isolated component
-  //add spinner component
   methods: {
     async getPrimaryImage (id) {
       if( this.randomId > 0){
@@ -87,23 +84,50 @@ export default {
     getSearchValue () {
       console.log("Searchvalue", this.searchValue)
       return this.searchValue;
+    },
+    showQuestion () {
+      if (this.hover === false) {
+        this.hover = true;
+        setTimeout(function(){
+          this.hover = false;
+        }, 1000);
+      }
+    },
+    showInfo () {
+
     }
   }
-  //add favorites
 }
 </script>
 
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@400;600&display=swap');
+
 .infobox {
+  font-family: 'Open Sans', sans-serif;
   position:absolute;
-  opacity: 0;
-  width: 100%;
-}
-.infobox:hover {
+  opacity: 1;
+  border-radius: 12px;
+  margin: 1rem;
+  width: 30vw;
+  padding: 1em;
   color: white;
-  background-color: black;
+  background-image: linear-gradient(to right, rgba(0,0,0,.65), rgba(255,255,255,.15));
+  -webkit-box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
+  box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
+  font-size: 1em;
+  left: calc(-30vw);
+  transition: opacity 200ms, left 200ms, background-image 200ms;
+ }
+
+.infobox:hover {
+  background-image: linear-gradient(to right, rgba(0,0,0,.65), rgba(0,0,0,.15));
+  transition: opacity 200ms, left 200ms, background-image 1000ms;
+  left: calc(0vw - 1em);
   opacity: 1;
 }
+
 .primaryImage {
   padding-top: 2rem;
   width: 100vw;
