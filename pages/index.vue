@@ -59,6 +59,8 @@ export default {
       //TODO - check for bad response
       if (response.status ==! 200){
         console.log("Xid", response.status)
+        console.log("Response data", response.data.objectIDs)
+        this.searchValue = "paintings";
         this.process();
       }else {
         console.log("something", response.data.objectIDs)
@@ -77,24 +79,12 @@ export default {
     async process () {
       this.isLoading = true;
       this.newId = await this.getRandomId()
-      // this.randomId = this.rngId(this.newId)
       this.randomId = this.newId
       return this.getPrimaryImage(this.randomId.toString())
     },
     getSearchValue () {
       console.log("Searchvalue", this.searchValue)
       return this.searchValue;
-    },
-    showQuestion () {
-      if (this.hover === false) {
-        this.hover = true;
-        setTimeout(function(){
-          this.hover = false;
-        }, 1000);
-      }
-    },
-    showInfo () {
-
     }
   }
 }
