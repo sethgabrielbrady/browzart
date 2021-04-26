@@ -29,7 +29,6 @@ export default {
     return {
       resImage: 'Initial State',
       randomId: 0,
-      newId: 0,
       isLoading: false,
       searchValue: "paintings"
     }
@@ -40,12 +39,9 @@ export default {
   methods: {
     async getPrimaryImage (id) {
       if( this.randomId > 0){
-        console.log("passed id", id)
         const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/objects/' + id)
-        console.log("Art", response.status)
         if (response.data.primaryImage === '') {
           this.isLoading = true;
-          console.log("No image-reset")
           this.process();
         }else {
           this.resImage = response.data
@@ -55,35 +51,22 @@ export default {
     },
     async getRandomId () {
       const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/search?q='+ this.searchValue)
-      console.log("status", response.status)
-      //TODO - check for bad response
-      if (response.status ==! 200){
-        console.log("Xid", response.status)
-        console.log("Response data", response.data.objectIDs)
+      if (response.status ==! 200 ){
         this.searchValue = "paintings";
         this.process();
       }else {
-        console.log("something", response.data.objectIDs)
-        const Arrayid = this.rngId (response.data.objectIDs.length)
-        console.log("newID", Arrayid)
-        console.log("arr",response.data.objectIDs[Arrayid] )
-        return response.data.objectIDs[Arrayid]
+        return response.data.objectIDs[this.rngId (response.data.objectIDs.length)]
       }
     },
     rngId (max) {
-      //combine into getRandomId()
-      const id = Math.floor(Math.random() * max);
-      console.log("randomId", id)
-      return id
+      return Math.floor(Math.random() * max);
     },
     async process () {
       this.isLoading = true;
-      this.newId = await this.getRandomId()
-      this.randomId = this.newId
+      this.randomId = await this.getRandomId()
       return this.getPrimaryImage(this.randomId.toString())
     },
     getSearchValue () {
-      console.log("Searchvalue", this.searchValue)
       return this.searchValue;
     }
   }
@@ -95,39 +78,38 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@400;600&display=swap');
 
 .infobox {
-  font-family: 'Open Sans', sans-serif;
-  position:absolute;
-  opacity: 1;
-  border-radius: 12px;
-  margin: 1rem;
-  width: 20vw;
-  padding: 1em;
-  color: white;
-  background-image: linear-gradient(to right, rgba(0,0,0,.65), rgba(255,255,255,.15));
+  background-image: linear-gradient(to right, rgba(0,0,0,.55), rgba(0,0,0,.25));
   -webkit-box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
+  border-radius: 10px;
   box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
+  color: white;
+  font-family: 'Open Sans', sans-serif;
   font-size: 1em;
-  left: calc(-20vw);
-  transition: opacity 200ms, left 300ms, background-image 200ms;
   height: 180px;
+  left: calc(-20vw);
+  margin: 1rem;
+  position: absolute;
+  padding: 1em;
+  width: 20vw;
+  transition: left 300ms, background-image 200ms;
  }
 
 .infobox:hover {
+  background-image: linear-gradient(to right, rgba(0,0,0,.55), rgba(0,0,0,.15));
+  left: calc(0vw - 1em);
   min-width: 20vw;
   max-width: max-content;
-  background-image: linear-gradient(to right, rgba(0,0,0,.65), rgba(0,0,0,.15));
-  transition: opacity 200ms, left 300ms, background-image 1000ms;
-  left: calc(0vw - 1em);
-  opacity: 1;
+  transition: left 300ms, background-image 1000ms;
 }
 
 .primaryImage {
-  padding-top: 2rem;
-  width: 100vw;
-  height: 100vh;
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   background-color: black;
+  padding-top: 2rem;
+  height: 100vh;
+  width: 100vw;
 }
+
 </style>

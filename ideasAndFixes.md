@@ -1,5 +1,5 @@
 UPDATES AND FIXES
-  Add "enter" keypres for search
+  Add "enter" keypress for search
   Move api call into seperate component
   Fix null object id
 
@@ -11,6 +11,7 @@ UPDATES AND FIXES
   Add testing
 
 NEW FEATURES
+  Add perimeter screen clicking/touching - will bring up an info window in the spot that was clicked
   Ability to zoom on image (have image go beyond vw and vh)
   Add a random search button
   Add additional museum and art apis
