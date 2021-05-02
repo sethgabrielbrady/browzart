@@ -11,10 +11,11 @@
         <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
         <button @click="process">Search</button><br>
         <button @click="zoom">{{isZoomed ? "Contain" : "Fill"}}</button>
+        <button @click="refresh">Refresh</button><br>
       </div>
       <img
         :src="resImage.primaryImage"
-        :class="[isZoomed ? 'zoomedImg' : '', 'primaryImage']"
+        :class="[isZoomed ? 'zoomedImg' : '', 'primaryImage', isLoading ? 'hide' : '']"
         :aria-label="[resImage.title ? resImage.title : 'No img title available.', ]"
       />
     </div>
@@ -23,6 +24,8 @@
 </template>
 
 <script>
+// Move info and buttons to seperate contianers
+
 import axios from 'axios'
 import BaseSpinner from '../components/BaseSpinner.vue'
 
@@ -32,11 +35,11 @@ export default {
   },
   data () {
     return {
-      resImage: 'Initial State',
-      randomId: 0,
+      resImage: '',
       isLoading: false,
       searchValue: "paintings",
-      isZoomed: false
+      isZoomed: false,
+      isMetLogo: false
     }
   },
   created () {
@@ -79,6 +82,11 @@ export default {
         console.log("Zoomed", this.isZoomed)
         this.isZoomed = !this.isZoomed
         console.log("Zoomed", this.isZoomed)
+    },
+    refresh () {
+        this.resImage.primaryImage = "";
+        this.isZoomed = false;
+        this.process();
     }
   }
 }
@@ -91,7 +99,7 @@ export default {
   background-color: black;
 }
 .infobox {
-  background-image: linear-gradient(to right, rgba(0,0,0,.65), rgba(200,200,200,.05));
+  background-image: linear-gradient(to right, rgba(0,0,0,.65), rgba(200,200,200,.15));
   -webkit-box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
   border-radius: 10px;
   box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
@@ -120,11 +128,17 @@ export default {
 }
 
 .primaryImage {
+  background-color: black;
   border: none;
   height: 100vh;
   width: 100vw;
   object-fit: contain;
   overflow: hidden;
+}
+
+.hide {
+  background-color: black;
+  opacity: 0;
 }
 
 .zoomedImg{

@@ -11,8 +11,8 @@ UPDATES AND FIXES
   Add testing
 
 NEW FEATURES
+  Add refresh button
   Add perimeter screen clicking/touching - will bring up an info window in the spot that was clicked
-  Ability to zoom on image (have image go beyond vw and vh)
   Add a random search button
   Add additional museum and art apis
   Store last 5 images into cookie or something
