@@ -2,16 +2,21 @@
   <div>
     <div class="container">
       <div class="infobox">
-        <p v-if="resImage.title" style="font-style:italic; padding-bottom:.5em;">{{ resImage.title }}</p>
+        <p class="title" v-if="resImage.title">{{ resImage.title }}</p>
         <p v-if="resImage.artistDisplayName">{{ resImage.artistRole +": " + resImage.artistDisplayName}}</p>
         <p v-else>Artist: unknown</p>
         <p v-if="resImage.artistDidsplayBio">{{ resImage.artistDidsplayBio}}</p>
         <p v-if="resImage.department">{{ "Dept: " + resImage.department}}</p>
         <p v-if="resImage.period">{{ resImage.period}}</p><br>
         <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
-        <button @click="process">Search</button>
+        <button @click="process">Search</button><br>
+        <button @click="zoom">{{isZoomed ? "Contain" : "Fill"}}</button>
       </div>
-      <div class="primaryImage" :style="{'background-image': 'url(' + resImage.primaryImage + ')'}" />
+      <img
+        :src="resImage.primaryImage"
+        :class="[isZoomed ? 'zoomedImg' : '', 'primaryImage']"
+        :aria-label="[resImage.title ? resImage.title : 'No img title available.', ]"
+      />
     </div>
     <base-spinner v-if="isLoading" />
   </div>
@@ -30,7 +35,8 @@ export default {
       resImage: 'Initial State',
       randomId: 0,
       isLoading: false,
-      searchValue: "paintings"
+      searchValue: "paintings",
+      isZoomed: false
     }
   },
   created () {
@@ -68,48 +74,61 @@ export default {
     },
     getSearchValue () {
       return this.searchValue;
+    },
+    zoom () {
+        console.log("Zoomed", this.isZoomed)
+        this.isZoomed = !this.isZoomed
+        console.log("Zoomed", this.isZoomed)
     }
   }
 }
 </script>
 
 <style>
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@400;600&display=swap');
 
+.container {
+  background-color: black;
+}
 .infobox {
-  background-image: linear-gradient(to right, rgba(0,0,0,.55), rgba(0,0,0,.25));
+  background-image: linear-gradient(to right, rgba(0,0,0,.65), rgba(200,200,200,.05));
   -webkit-box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
   border-radius: 10px;
   box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
   color: white;
   font-family: 'Open Sans', sans-serif;
   font-size: 1em;
-  height: 180px;
+  height: 200px;
   left: calc(-20vw);
   margin: 1rem;
-  position: absolute;
-  padding: 1em;
+  position: fixed;
+  padding: 1rem 2em;
   width: 20vw;
   transition: left 300ms, background-image 200ms;
  }
 
 .infobox:hover {
-  background-image: linear-gradient(to right, rgba(0,0,0,.55), rgba(0,0,0,.15));
-  left: calc(0vw - 1em);
+  left: calc(0vw - 2em);
   min-width: 20vw;
   max-width: max-content;
   transition: left 300ms, background-image 1000ms;
 }
 
-.primaryImage {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-color: black;
-  padding-top: 2rem;
-  height: 100vh;
-  width: 100vw;
+.infobox > .title {
+  font-style:italic;
+  padding-bottom:0.5em;
 }
 
+.primaryImage {
+  border: none;
+  height: 100vh;
+  width: 100vw;
+  object-fit: contain;
+  overflow: hidden;
+}
+
+.zoomedImg{
+  height: 100%;
+  width: 100%;
+}
 </style>
