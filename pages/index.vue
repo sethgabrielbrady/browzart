@@ -59,6 +59,8 @@ export default {
       }
     },
     async getRandomId () {
+      this.isLoading = true;
+      this.isZoomed = false;
       const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/search?q='+ this.searchValue)
       if (response.status ==! 200 ){
         this.searchValue = "paintings";
@@ -79,9 +81,7 @@ export default {
       return this.searchValue;
     },
     zoom () {
-        console.log("Zoomed", this.isZoomed)
         this.isZoomed = !this.isZoomed
-        console.log("Zoomed", this.isZoomed)
     },
     refresh () {
         this.resImage.primaryImage = "";
