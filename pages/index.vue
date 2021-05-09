@@ -25,6 +25,9 @@
 
 <script>
 // Move info and buttons to seperate contianers
+// Add favorites to local storage
+// Add carousel of  last viewed and favorites
+
 
 import axios from 'axios'
 import BaseSpinner from '../components/BaseSpinner.vue'
@@ -39,7 +42,8 @@ export default {
       isLoading: false,
       searchValue: "paintings",
       isZoomed: false,
-      isMetLogo: false
+      isMetLogo: false,
+      imageArray: []
     }
   },
   created () {
@@ -50,21 +54,20 @@ export default {
       if( this.randomId > 0){
         const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/objects/' + id)
         if (response.data.primaryImage === '') {
-          this.isLoading = true;
           this.process();
         }else {
           this.resImage = response.data
+          this.imageKeep(this.resImage.primaryImage)
           this.isLoading = false;
         }
       }
     },
     async getRandomId () {
-      this.isLoading = true;
       this.isZoomed = false;
       const response = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/search?q='+ this.searchValue)
       if (response.status ==! 200 ){
         this.searchValue = "paintings";
-        this.process();
+        this.process ();
       }else {
         return response.data.objectIDs[this.rngId (response.data.objectIDs.length)]
       }
@@ -87,6 +90,14 @@ export default {
         this.resImage.primaryImage = "";
         this.isZoomed = false;
         this.process();
+    },
+    imageKeep (image) {
+      if (this.imageArray.length < 10) {
+        this.imageArray.unshift(image)
+      } else {
+        this.imageArray.pop();
+        this.imageArray.unshift(image)
+      }
     }
   }
 }
