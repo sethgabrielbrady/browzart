@@ -12,6 +12,7 @@
         <button @click="process">Search</button><br>
         <button @click="zoom">{{isZoomed ? "Contain" : "Fill"}}</button>
         <button @click="refresh">Refresh</button><br>
+        <button @click="addToFavorites">Add To Favorite</button><br>
       </div>
       <img
         :src="resImage.primaryImage"
@@ -24,7 +25,7 @@
 </template>
 
 <script>
-// Move info and buttons to seperate contianers
+// Move info and buttons to seperate containers
 // Add favorites to local storage
 // Add carousel of  last viewed and favorites
 
@@ -43,7 +44,9 @@ export default {
       searchValue: "paintings",
       isZoomed: false,
       isMetLogo: false,
-      imageArray: []
+      imageArray: [],
+      favoriteCount: 0,
+      favoriteArray: []
     }
   },
   created () {
@@ -98,6 +101,19 @@ export default {
         this.imageArray.pop();
         this.imageArray.unshift(image)
       }
+    },
+    addToFavorites(){
+      //this isnt quite right but a start
+      let currentFavorite = 'favorite_' + this.favoriteCount;
+       console.log("favoriteCount", this.favoriteCount);
+      if ( this.favoriteArray.length < 10) {
+        localStorage.setItem(currentFavorite , this.resImage.primaryImage );
+        this.favoriteArray.unshift(localStorage.getItem(currentFavorite));
+      }else {
+         this.favoriteArray.pop();
+         this.favoriteArray.unshift(localStorage.getItem(currentFavorite));
+      }
+      console.log("favorite array", this.favoriteArray);
     }
   }
 }
