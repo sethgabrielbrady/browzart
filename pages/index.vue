@@ -9,7 +9,7 @@
         <p v-if="resImage.department">{{ "Dept: " + resImage.department}}</p>
         <p v-if="resImage.period">{{ resImage.period}}</p><br>
         <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
-        <button @click="process">Search</button><br>
+        <button @click="refresh">Search</button><br>
         <button @click="zoom">{{isZoomed ? "Contain" : "Fill"}}</button>
         <button @click="refresh">Refresh</button><br>
         <button @click="addToFavorites">Add To Favorite</button><br>
@@ -29,7 +29,6 @@
 // Add favorites to local storage
 // Add carousel of  last viewed and favorites
 
-
 import axios from 'axios'
 import BaseSpinner from '../components/BaseSpinner.vue'
 
@@ -47,7 +46,7 @@ export default {
       imageArray: [],
       favoriteCount: 0,
       favoriteArray: []
-    }
+      }
   },
   created () {
     return this.process();
@@ -113,7 +112,7 @@ export default {
          this.favoriteArray.pop();
          this.favoriteArray.unshift(localStorage.getItem(currentFavorite));
       }
-      console.log("favorite array", this.favoriteArray);
+      // console.log("favorite array", this.favoriteArray);
     }
   }
 }
