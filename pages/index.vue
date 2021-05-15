@@ -10,7 +10,10 @@
         <p v-if="resImage.period">{{ resImage.period}}</p><br>
         <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
         <button @click="refresh">Search</button><br>
-        <button @click="zoom">{{isZoomed ? "Contain" : "Fill"}}</button>
+        <button @click="zoom">
+           <!-- <i :class="[isZoomed ? 'fas fa-compress-alt' : 'fas fa-expand-alt']"></i> -->
+           {{ isZoomed ? '[>-<]' : '[<->]'}}
+        </button>
         <button @click="refresh">Refresh</button><br>
         <button @click="addToFavorites">Add To Favorite</button><br>
       </div>
