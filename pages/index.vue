@@ -9,13 +9,13 @@
         <p v-if="resImage.department">{{ "Dept: " + resImage.department}}</p>
         <p v-if="resImage.period">{{ resImage.period}}</p><br>
         <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
-        <button @click="refresh">Search</button><br>
+        <button :class="[isDisabled ? 'disable' : '']" @click="refresh">Search</button><br>
         <button @click="zoom">
-           <!-- <i :class="[isZoomed ? 'fas fa-compress-alt' : 'fas fa-expand-alt']"></i> -->
-           {{ isZoomed ? '[>-<]' : '[<->]'}}
+          {{ isZoomed ? '<' : '>' }}
         </button>
-        <button @click="refresh">Refresh</button><br>
-        <button @click="addToFavorites">Add To Favorite</button><br>
+        <button :class="[isDisabled ? 'disable' : '']" @click="refresh">➰</button><br>
+        <button @click="addToFavorites">♥️</button><br>
+        <button @click="disableButton"> {{ isDisabled ? 'Disable' : 'Enable' }}</button><br>
       </div>
       <img
         :src="resImage.primaryImage"
@@ -48,7 +48,8 @@ export default {
       isMetLogo: false,
       imageArray: [],
       favoriteCount: 0,
-      favoriteArray: []
+      favoriteArray: [],
+      isDisabled: true
       }
   },
   created () {
@@ -116,6 +117,9 @@ export default {
          this.favoriteArray.unshift(localStorage.getItem(currentFavorite));
       }
       // console.log("favorite array", this.favoriteArray);
+    },
+    disableButton() {
+      this.isDisabled = !this.isDisabled
     }
   }
 }
@@ -170,8 +174,12 @@ export default {
   opacity: 0;
 }
 
-.zoomedImg{
+.zoomedImg {
   height: 100%;
   width: 100%;
+}
+
+.disable {
+  pointer-events: none;
 }
 </style>
