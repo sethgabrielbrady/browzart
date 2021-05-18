@@ -15,7 +15,7 @@
         </button>
         <button :class="[isDisabled ? 'disable' : '']" @click="refresh">➰</button><br>
         <button @click="addToFavorites">♥️</button><br>
-        <button @click="disableButton"> {{ isDisabled ? 'Disable' : 'Enable' }}</button><br>
+        <button @click="disableButton"> {{ isDisabled ? 'Enable' : 'Disable' }}</button><br>
       </div>
       <img
         :src="resImage.primaryImage"
@@ -29,7 +29,6 @@
 
 <script>
 // Move info and buttons to seperate containers
-// Add favorites to local storage
 // Add carousel of  last viewed and favorites
 
 import axios from 'axios'
@@ -99,24 +98,30 @@ export default {
     },
     imageKeep (image) {
       if (this.imageArray.length < 10) {
-        this.imageArray.unshift(image)
-      } else {
-        this.imageArray.pop();
-        this.imageArray.unshift(image)
+          this.imageArray.unshift(image)
+        } else {
+          this.imageArray.pop();
+          this.imageArray.unshift(image)
       }
     },
     addToFavorites(){
       //this isnt quite right but a start
-      let currentFavorite = 'favorite_' + this.favoriteCount;
-       console.log("favoriteCount", this.favoriteCount);
-      if ( this.favoriteArray.length < 10) {
-        localStorage.setItem(currentFavorite , this.resImage.primaryImage );
-        this.favoriteArray.unshift(localStorage.getItem(currentFavorite));
+      if ( !this.favoriteArray.includes(this.resImage.primaryImage) ){
+        alert("does not include")
+        this.favoriteCount += 1;
+        let favId = 'favorite_' + this.favoriteCount;
+        console.log("favoriteCount", this.favoriteCount);
+        if ( this.favoriteArray.length < 10) {
+          localStorage.setItem(favId , this.resImage.primaryImage );
+          this.favoriteArray.unshift(localStorage.getItem(favId));
+        }else {
+          this.favoriteArray.pop();
+          this.favoriteArray.unshift(localStorage.getItem(favId));
+        }
       }else {
-         this.favoriteArray.pop();
-         this.favoriteArray.unshift(localStorage.getItem(currentFavorite));
+        alert("already favorited")
       }
-      // console.log("favorite array", this.favoriteArray);
+      console.log("favorites",this.favoriteArray);
     },
     disableButton() {
       this.isDisabled = !this.isDisabled
