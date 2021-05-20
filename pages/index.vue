@@ -10,18 +10,20 @@
         <p v-if="resImage.period">{{ resImage.period}}</p><br>
         <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
         <button :class="[isDisabled ? 'disable' : '']" @click="refresh">Search</button><br>
-        <button @click="zoom">
-          {{ isZoomed ? '<' : '>' }}
-        </button>
-        <button :class="[isDisabled ? 'disable' : '']" @click="refresh">➰</button><br>
-        <button @click="addToFavorites">♥️</button><br>
-        <button @click="disableButton"> {{ isDisabled ? 'Enable' : 'Disable' }}</button><br>
+        <!-- <button @click="disableButton"> {{ isDisabled ? 'Enable' : 'Disable' }}</button><br> -->
       </div>
       <img
         :src="resImage.primaryImage"
         :class="[isZoomed ? 'zoomedImg' : '', 'primaryImage', isLoading ? 'hide' : '']"
         :aria-label="[resImage.title ? resImage.title : 'No img title available.', ]"
       />
+      <div class="" style=" display:flex; flex-direction:row ;z-index:1000; position: relative;">
+        <button @click="zoom">
+          {{ isZoomed ? '✦' : '✥' }}
+        </button>
+        <button :class="[isDisabled ? 'disable' : '']" @click="refresh">★</button>
+        <button @click="addToFavorites">♡</button>
+      </div>
     </div>
     <base-spinner v-if="isLoading" />
   </div>
@@ -48,7 +50,7 @@ export default {
       imageArray: [],
       favoriteCount: 0,
       favoriteArray: [],
-      isDisabled: true
+      isDisabled: false
       }
   },
   created () {
@@ -107,7 +109,6 @@ export default {
     addToFavorites(){
       //this isnt quite right but a start
       if ( !this.favoriteArray.includes(this.resImage.primaryImage) ){
-        alert("does not include")
         this.favoriteCount += 1;
         let favId = 'favorite_' + this.favoriteCount;
         console.log("favoriteCount", this.favoriteCount);
@@ -118,8 +119,6 @@ export default {
           this.favoriteArray.pop();
           this.favoriteArray.unshift(localStorage.getItem(favId));
         }
-      }else {
-        alert("already favorited")
       }
       console.log("favorites",this.favoriteArray);
     },
