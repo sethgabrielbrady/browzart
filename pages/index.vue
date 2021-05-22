@@ -17,12 +17,14 @@
         :class="[isZoomed ? 'zoomedImg' : '', 'primaryImage', isLoading ? 'hide' : '']"
         :aria-label="[resImage.title ? resImage.title : 'No img title available.', ]"
       />
-      <div class="" style=" display:flex; flex-direction:row ;z-index:1000; position: relative;">
-        <button @click="zoom">
-          {{ isZoomed ? '✦' : '✥' }}
-        </button>
-        <button :class="[isDisabled ? 'disable' : '']" @click="refresh">★</button>
-        <button @click="addToFavorites">♡</button>
+      <div class="iconbox">
+        <div  class="buttonContainer">
+          <button @click="zoom">
+            {{ isZoomed ? '✦' : '✥' }}
+          </button>
+          <button :class="[isDisabled ? 'disable' : '']" @click="refresh">★</button>
+          <button @click="addToFavorites">♡</button>
+        </div>
       </div>
     </div>
     <base-spinner v-if="isLoading" />
@@ -30,7 +32,8 @@
 </template>
 
 <script>
-// Move info and buttons to seperate containers
+// Finish setting up buttons and info box positioning
+// Hide Buttons and info box after 5 seconds
 // Add carousel of  last viewed and favorites
 
 import axios from 'axios'
@@ -163,6 +166,20 @@ export default {
   font-style:italic;
   padding-bottom:0.5em;
 }
+
+.iconbox {
+  opacity: 0.3;
+  position: fixed;
+  bottom:20px;
+  width: 100px;
+  padding: 4px;
+ }
+
+ .buttonContainer {
+   display:flex;
+   flex-direction:row;
+   justify-content: space-around;
+ }
 
 .primaryImage {
   background-color: black;
