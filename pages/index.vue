@@ -45,15 +45,15 @@ export default {
   },
   data () {
     return {
-      resImage: '',
+      favoriteCount: 0,
+      favoriteArray: [],
       isLoading: false,
-      searchValue: "paintings",
       isZoomed: false,
       isMetLogo: false,
       imageArray: [],
-      favoriteCount: 0,
-      favoriteArray: [],
-      isDisabled: false
+      isDisabled: false,
+      resImage: '',
+      searchValue: "paintings"
       }
   },
   created () {
@@ -140,8 +140,8 @@ export default {
 }
 .infobox {
   background-image: linear-gradient(to right, rgba(0,0,0,.65), rgba(200,200,200,.15));
-  -webkit-box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
   border-radius: 10px;
+  -webkit-box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
   box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
   color: white;
   font-family: 'Open Sans', sans-serif;
@@ -151,14 +151,14 @@ export default {
   margin: 1rem;
   position: fixed;
   padding: 1rem 2em;
-  width: 20vw;
   transition: left 300ms, background-image 200ms;
+  width: 20vw;
  }
 
 .infobox:hover {
   left: calc(0vw - 2em);
-  min-width: 20vw;
   max-width: max-content;
+  min-width: 20vw;
   transition: left 300ms, background-image 1000ms;
 }
 
@@ -168,26 +168,26 @@ export default {
 }
 
 .iconbox {
-  opacity: 0.3;
-  position: fixed;
   bottom:20px;
-  width: 100px;
+  opacity: 0.3;
   padding: 4px;
+  position: fixed;
+  width: 100px;
  }
 
  .buttonContainer {
-   display:flex;
-   flex-direction:row;
-   justify-content: space-around;
+  display:flex;
+  flex-direction:row;
+  justify-content: space-around;
  }
 
 .primaryImage {
   background-color: black;
   border: none;
   height: 100vh;
-  width: 100vw;
   object-fit: contain;
   overflow: hidden;
+  width: 100vw;
 }
 
 .hide {
