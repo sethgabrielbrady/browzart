@@ -26,6 +26,13 @@
           <button @click="addToFavorites">♡</button>
         </div>
       </div>
+      <div class="imagebox">
+        <ul>
+          <li v-for="(favorites, index) in favoriteArray">
+              {{ favoriteArray[index] }}
+          </li>
+        </ul>
+      </div>
     </div>
     <base-spinner v-if="isLoading" />
   </div>
@@ -179,6 +186,15 @@ export default {
   display:flex;
   flex-direction:row;
   justify-content: space-around;
+ }
+
+ .imagebox {
+  right: 0px;
+  color:red;
+  bottom:20px;
+  padding: 4px;
+  position: fixed;
+  width: auto;
  }
 
 .primaryImage {
