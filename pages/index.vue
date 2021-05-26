@@ -29,8 +29,8 @@
       <div class="imagebox">
         <ul style="list-style-type: none;">
           <li v-for="(favorites, index) in favoriteArray">
-            <a :href="favoriteArray[index]" target="_blank">
-              <img :src="favoriteArray[index]" height="50px" />
+            <a :href="favoriteArray[index]" target="_blank" >
+              <img :src="favoriteArray[index]" width="80vw" class="thumbPreview" />
             </a>
           </li>
         </ul>
@@ -54,6 +54,7 @@ export default {
   },
   data () {
     return {
+      favX: 0,
       favoriteCount: 0,
       favoriteArray: [],
       isLoading: false,
@@ -122,14 +123,12 @@ export default {
       //this isnt quite right but a start
       if ( !this.favoriteArray.includes(this.resImage.primaryImage) ){
         this.favoriteCount += 1;
-        let favX += 1
-        let favId = 'favorite_' = favX
+        this.favX += 1
+        let favId = 'favorite_' + this.favX
         console.log("favoriteCount", this.favoriteCount);
         if ( this.favoriteArray.length === 10) {
           this.favoriteArray.pop();
           this.favoriteCount = 9;
-        }else {
-          this.favoriteArray.unshift(localStorage.getItem(favId));
         }
         localStorage.setItem(favId , this.resImage.primaryImage);
         this.favoriteArray.unshift(localStorage.getItem(favId));
@@ -222,5 +221,15 @@ export default {
 
 .disable {
   pointer-events: none;
+}
+
+.thumbPreview {
+  opacity: 0.5
+}
+.thumbPreview:hover {
+  transform: scale(1.5);
+  opacity: 1;
+  z-index: 1;
+  position: relative;
 }
 </style>
