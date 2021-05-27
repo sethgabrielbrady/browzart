@@ -30,7 +30,7 @@
         <ul style="list-style-type: none;">
           <li v-for="(favorites, index) in favoriteArray">
             <a :href="favoriteArray[index]" target="_blank" >
-              <img :src="favoriteArray[index]" width="80vw" class="thumbPreview" />
+              <img :src="favoriteArray[index]" height="80vw" class="thumbPreview" style="margin: 5px;" />
             </a>
           </li>
         </ul>
@@ -41,9 +41,10 @@
 </template>
 
 <script>
+// add text to speech API
 // Finish setting up buttons and info box positioning
 // Hide Buttons and info box after 5 seconds
-// Add carousel of  last viewed and favorites
+// Add carousel of last viewed and favorites
 
 import axios from 'axios'
 import BaseSpinner from '../components/BaseSpinner.vue'
@@ -197,7 +198,21 @@ export default {
   bottom:20px;
   padding: 4px;
   position: fixed;
-  width: auto;
+  width: 25vw;
+  overflow: scroll;
+  padding-right: 10vw;
+ }
+ .imagebox:hover {
+   z-index:100;
+   /* background: black; */
+   background-image: linear-gradient(to left, rgba(0,0,0,.65), rgba(200,200,200,.15));
+    border-radius: 10px;
+    -webkit-box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
+    box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
+ }
+ .imagebox > ul {
+   display: flex;
+   flex-direction: row;
  }
 
 .primaryImage {
