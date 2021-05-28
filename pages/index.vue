@@ -24,6 +24,7 @@
           </button>
           <button :class="[isDisabled ? 'disable' : '']" @click="refresh">★</button>
           <button @click="addToFavorites">♡</button>
+          <button @click="toggleModal">M</button>
         </div>
       </div>
       <div class="imagebox">
@@ -35,16 +36,30 @@
           </li>
         </ul>
       </div>
+
+      <div
+        class="modal-test"
+        :class="showModal ? '' : 'hide-modal' "
+        @click="toggleModal"
+      >
+        <p class="title" v-if="resImage.title">{{ resImage.title }}</p>
+        <p v-if="resImage.artistDisplayName">{{ resImage.artistRole +": " + resImage.artistDisplayName}}</p>
+        <p v-else>Artist: unknown</p>
+        <p v-if="resImage.artistDidsplayBio">{{ resImage.artistDidsplayBio}}</p>
+        <p v-if="resImage.department">{{ "Dept: " + resImage.department}}</p>
+        <p v-if="resImage.period">{{ resImage.period}}</p><br>
+        <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
+        <button :class="[isDisabled ? 'disable' : '']" @click="refresh">Search</button><br>
+
+      </div>
     </div>
     <base-spinner v-if="isLoading" />
   </div>
 </template>
 
 <script>
+// Put everything into 1 large modal
 // add text to speech API
-// Finish setting up buttons and info box positioning
-// Hide Buttons and info box after 5 seconds
-// Add carousel of last viewed and favorites
 
 import axios from 'axios'
 import BaseSpinner from '../components/BaseSpinner.vue'
@@ -64,7 +79,8 @@ export default {
       imageArray: [],
       isDisabled: false,
       resImage: '',
-      searchValue: "paintings"
+      searchValue: "paintings",
+      showModal: false
       }
   },
   created () {
@@ -120,8 +136,7 @@ export default {
           this.imageArray.unshift(image)
       }
     },
-    addToFavorites(){
-      //this isnt quite right but a start
+    addToFavorites () {
       if ( !this.favoriteArray.includes(this.resImage.primaryImage) ){
         this.favoriteCount += 1;
         this.favX += 1
@@ -134,10 +149,12 @@ export default {
         localStorage.setItem(favId , this.resImage.primaryImage);
         this.favoriteArray.unshift(localStorage.getItem(favId));
       }
-      console.log("favorites",this.favoriteArray);
     },
-    disableButton() {
+    disableButton () {
       this.isDisabled = !this.isDisabled
+    },
+    toggleModal () {
+      this.showModal = !this.showModal
     }
   }
 }
@@ -202,18 +219,30 @@ export default {
   overflow: scroll;
   padding-right: 10vw;
  }
+
  .imagebox:hover {
    z-index:100;
-   /* background: black; */
    background-image: linear-gradient(to left, rgba(0,0,0,.65), rgba(200,200,200,.15));
     border-radius: 10px;
     -webkit-box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
     box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
  }
+
  .imagebox > ul {
    display: flex;
    flex-direction: row;
  }
+
+ .thumbPreview {
+  opacity: 0.5
+}
+
+.thumbPreview:hover {
+  transform: scale(1.5);
+  opacity: 1;
+  z-index: 1;
+  position: relative;
+}
 
 .primaryImage {
   background-color: black;
@@ -238,13 +267,20 @@ export default {
   pointer-events: none;
 }
 
-.thumbPreview {
-  opacity: 0.5
+.hide-modal {
+  display: none;
 }
-.thumbPreview:hover {
-  transform: scale(1.5);
-  opacity: 1;
-  z-index: 1;
-  position: relative;
+.modal-test {
+  color: white;
+  background: black;
+  opacity: .75;
+  height: 90vh;
+  width: 90vw;
+  position: absolute;
+  z-index: 10000;
+  top:0;
+  margin: 0px auto;
+  transform:translate(5vw, 5vh)
 }
+
 </style>
