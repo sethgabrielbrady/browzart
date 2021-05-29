@@ -1,17 +1,6 @@
 <template>
   <div>
     <div class="container">
-      <div class="infobox">
-        <p class="title" v-if="resImage.title">{{ resImage.title }}</p>
-        <p v-if="resImage.artistDisplayName">{{ resImage.artistRole +": " + resImage.artistDisplayName}}</p>
-        <p v-else>Artist: unknown</p>
-        <p v-if="resImage.artistDidsplayBio">{{ resImage.artistDidsplayBio}}</p>
-        <p v-if="resImage.department">{{ "Dept: " + resImage.department}}</p>
-        <p v-if="resImage.period">{{ resImage.period}}</p><br>
-        <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
-        <button :class="[isDisabled ? 'disable' : '']" @click="refresh">Search</button><br>
-        <!-- <button @click="disableButton"> {{ isDisabled ? 'Enable' : 'Disable' }}</button><br> -->
-      </div>
       <img
         :src="resImage.primaryImage"
         :class="[isZoomed ? 'zoomedImg' : '', 'primaryImage', isLoading ? 'hide' : '']"
@@ -27,29 +16,30 @@
           <button @click="toggleModal">M</button>
         </div>
       </div>
-      <div class="imagebox">
-        <ul style="list-style-type: none;">
-          <li v-for="(favorites, index) in favoriteArray">
-            <a :href="favoriteArray[index]" target="_blank" >
-              <img :src="favoriteArray[index]" height="80vw" class="thumbPreview" style="margin: 5px;" />
-            </a>
-          </li>
-        </ul>
-      </div>
-
       <div
         class="modal-test"
         :class="showModal ? '' : 'hide-modal' "
         @click="toggleModal"
       >
-        <p class="title" v-if="resImage.title">{{ resImage.title }}</p>
-        <p v-if="resImage.artistDisplayName">{{ resImage.artistRole +": " + resImage.artistDisplayName}}</p>
-        <p v-else>Artist: unknown</p>
-        <p v-if="resImage.artistDidsplayBio">{{ resImage.artistDidsplayBio}}</p>
-        <p v-if="resImage.department">{{ "Dept: " + resImage.department}}</p>
-        <p v-if="resImage.period">{{ resImage.period}}</p><br>
-        <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
-        <button :class="[isDisabled ? 'disable' : '']" @click="refresh">Search</button><br>
+          <p class="title" v-if="resImage.title">{{ resImage.title }}</p>
+          <p v-if="resImage.artistDisplayName">{{ resImage.artistRole +": " + resImage.artistDisplayName}}</p>
+          <p v-else>Artist: unknown</p>
+          <p v-if="resImage.artistDidsplayBio">{{ resImage.artistDidsplayBio}}</p>
+          <p v-if="resImage.department">{{ "Dept: " + resImage.department}}</p>
+          <p v-if="resImage.period">{{ resImage.period}}</p><br>
+          <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
+          <button :class="[isDisabled ? 'disable' : '']" @click="refresh">Search</button><br>
+          <!-- <button :class="[isDisabled ? 'disable' : '']" @click="refresh">Search</button><br> -->
+
+        <div class="imagebox">
+          <ul style="list-style-type: none;">
+            <li v-for="(favorites, index) in favoriteArray">
+              <a :href="favoriteArray[index]" target="_blank" >
+                <img :src="favoriteArray[index]" height="80vw" class="thumbPreview" style="margin: 5px;" />
+              </a>
+            </li>
+          </ul>
+        </div>
 
       </div>
     </div>
@@ -210,6 +200,7 @@ export default {
  }
 
  .imagebox {
+  background-color: rgba(0,0,0);
   right: 0px;
   color:red;
   bottom:20px;
