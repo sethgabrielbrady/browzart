@@ -21,16 +21,19 @@
         :class="showModal ? '' : 'hide-modal' "
         @click="toggleModal"
       >
-          <p class="title" v-if="resImage.title">{{ resImage.title }}</p>
+        <div style="text-align:center; position:relative; top:25%;">
+          <p class="title" v-if="resImage.title"><b>{{ resImage.title }}</b></p><br>
           <p v-if="resImage.artistDisplayName">{{ resImage.artistRole +": " + resImage.artistDisplayName}}</p>
           <p v-else>Artist: unknown</p>
-          <p v-if="resImage.artistDidsplayBio">{{ resImage.artistDidsplayBio}}</p>
-          <p v-if="resImage.department">{{ "Dept: " + resImage.department}}</p>
+          <p v-if="resImage.artistDidsplayBio">{{ resImage.artistDidsplayBio}}</p><br>
           <p v-if="resImage.period">{{ resImage.period}}</p><br>
-          <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
-          <button :class="[isDisabled ? 'disable' : '']" @click="refresh">Search</button><br>
-          <!-- <button :class="[isDisabled ? 'disable' : '']" @click="refresh">Search</button><br> -->
 
+          <p v-if="resImage.department" style="font-size: 10px;"><i>{{ "Dept: " + resImage.department}}</i></p><br>
+
+          <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
+          <button :class="[isDisabled ? 'disable' : '']" @click="refresh" style="position:relative; z-index: 1000;">Search</button><br>
+          <!-- <button :class="[isDisabled ? 'disable' : '']" @click="refresh">Search</button><br> -->
+        </div>
         <div class="imagebox">
           <ul style="list-style-type: none;">
             <li v-for="(favorites, index) in favoriteArray">
@@ -41,6 +44,16 @@
           </ul>
         </div>
 
+        <div class="iconbox">
+          <div  class="buttonContainer">
+            <button @click="zoom">
+              {{ isZoomed ? '✦' : '✥' }}
+            </button>
+            <button :class="[isDisabled ? 'disable' : '']" @click="refresh">★</button>
+            <button @click="addToFavorites">♡</button>
+          </div>
+        </div>
+
       </div>
     </div>
     <base-spinner v-if="isLoading" />
@@ -48,8 +61,8 @@
 </template>
 
 <script>
-// Put everything into 1 large modal
 // add text to speech API
+// Use Css grid to organize UI components
 
 import axios from 'axios'
 import BaseSpinner from '../components/BaseSpinner.vue'
