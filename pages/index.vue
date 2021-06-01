@@ -8,11 +8,11 @@
       />
       <div class="iconbox">
         <div  class="buttonContainer">
-          <!-- <button @click="zoom">
+          <button @click="zoom">
             {{ isZoomed ? '✦' : '✥' }}
           </button>
           <button :class="[isDisabled ? 'disable' : '']" @click="refresh">★</button>
-          <button @click="addToFavorites">♡</button> -->
+          <button @click="addToFavorites">♡</button>
           <button @click="toggleModal">M</button>
         </div>
       </div>
@@ -43,7 +43,7 @@
           </ul>
         </div>
 
-        <div class="iconbox">
+        <!-- <div class="iconbox">
           <div  class="buttonContainer">
             <button @click="zoom">
               {{ isZoomed ? '✦' : '✥' }}
@@ -51,7 +51,7 @@
             <button :class="[isDisabled ? 'disable' : '']" @click="refresh">★</button>
             <button @click="addToFavorites">♡</button>
           </div>
-        </div>
+        </div> -->
 
       </div>
     </div>
@@ -168,6 +168,7 @@ export default {
 .container {
   background-color: black;
 }
+
 .infobox {
   background-image: linear-gradient(to right, rgba(0,0,0,.65), rgba(200,200,200,.15));
   border-radius: 10px;
@@ -273,6 +274,7 @@ export default {
 .hide-modal {
   display: none;
 }
+
 .modal-test {
   color: white;
   background: black;
