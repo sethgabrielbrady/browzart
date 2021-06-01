@@ -8,11 +8,11 @@
       />
       <div class="iconbox">
         <div  class="buttonContainer">
-          <button @click="zoom">
+          <!-- <button @click="zoom">
             {{ isZoomed ? '✦' : '✥' }}
           </button>
           <button :class="[isDisabled ? 'disable' : '']" @click="refresh">★</button>
-          <button @click="addToFavorites">♡</button>
+          <button @click="addToFavorites">♡</button> -->
           <button @click="toggleModal">M</button>
         </div>
       </div>
@@ -27,13 +27,12 @@
           <p v-else>Artist: unknown</p>
           <p v-if="resImage.artistDidsplayBio">{{ resImage.artistDidsplayBio}}</p><br>
           <p v-if="resImage.period">{{ resImage.period}}</p><br>
-
           <p v-if="resImage.department" style="font-size: 10px;"><i>{{ "Dept: " + resImage.department}}</i></p><br>
-
           <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
           <button :class="[isDisabled ? 'disable' : '']" @click="refresh" style="position:relative; z-index: 1000;">Search</button><br>
           <!-- <button :class="[isDisabled ? 'disable' : '']" @click="refresh">Search</button><br> -->
         </div>
+
         <div class="imagebox">
           <ul style="list-style-type: none;">
             <li v-for="(favorites, index) in favoriteArray">
@@ -124,19 +123,19 @@ export default {
       return this.searchValue;
     },
     zoom () {
-        this.isZoomed = !this.isZoomed
+      this.isZoomed = !this.isZoomed
     },
     refresh () {
-        this.resImage.primaryImage = "";
-        this.isZoomed = false;
-        this.process();
+      this.resImage.primaryImage = "";
+      this.isZoomed = false;
+      this.process();
     },
     imageKeep (image) {
       if (this.imageArray.length < 10) {
-          this.imageArray.unshift(image)
-        } else {
-          this.imageArray.pop();
-          this.imageArray.unshift(image)
+        this.imageArray.unshift(image)
+      } else {
+        this.imageArray.pop();
+        this.imageArray.unshift(image)
       }
     },
     addToFavorites () {
