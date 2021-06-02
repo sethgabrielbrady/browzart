@@ -6,6 +6,7 @@
         :class="[isZoomed ? 'zoomedImg' : '', 'primaryImage', isLoading ? 'hide' : '']"
         :aria-label="[resImage.title ? resImage.title : 'No img title available.', ]"
       />
+
       <div class="iconbox">
         <div  class="buttonContainer">
           <button @click="zoom">
@@ -17,7 +18,7 @@
         </div>
       </div>
       <div
-        class="modal-test"
+        class="modal"
         :class="showModal ? '' : 'hide-modal' "
         @click="toggleModal"
       >
@@ -43,15 +44,11 @@
           </ul>
         </div>
 
-        <!-- <div class="iconbox">
+        <div class="iconbox">
           <div  class="buttonContainer">
-            <button @click="zoom">
-              {{ isZoomed ? '✦' : '✥' }}
-            </button>
-            <button :class="[isDisabled ? 'disable' : '']" @click="refresh">★</button>
-            <button @click="addToFavorites">♡</button>
+           <!-- Buttons go here -->
           </div>
-        </div> -->
+        </div>
 
       </div>
     </div>
@@ -169,35 +166,6 @@ export default {
   background-color: black;
 }
 
-.infobox {
-  background-image: linear-gradient(to right, rgba(0,0,0,.65), rgba(200,200,200,.15));
-  border-radius: 10px;
-  -webkit-box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
-  box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
-  color: white;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1em;
-  height: 200px;
-  left: calc(-20vw);
-  margin: 1rem;
-  position: fixed;
-  padding: 1rem 2em;
-  transition: left 300ms, background-image 200ms;
-  width: 20vw;
- }
-
-.infobox:hover {
-  left: calc(0vw - 2em);
-  max-width: max-content;
-  min-width: 20vw;
-  transition: left 300ms, background-image 1000ms;
-}
-
-.infobox > .title {
-  font-style:italic;
-  padding-bottom:0.5em;
-}
-
 .iconbox {
   bottom:20px;
   opacity: 0.3;
@@ -275,7 +243,7 @@ export default {
   display: none;
 }
 
-.modal-test {
+.modal {
   color: white;
   background: black;
   opacity: .75;
