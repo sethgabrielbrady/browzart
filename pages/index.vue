@@ -249,7 +249,7 @@ export default {
   opacity: .75;
   height: 90vh;
   width: 90vw;
-  position: absolute;
+  position: fixed;
   z-index: 10000;
   top:0;
   margin: 0px auto;
