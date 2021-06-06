@@ -46,7 +46,7 @@
 
         <div class="iconbox">
           <div  class="buttonContainer">
-           <!-- Buttons go here -->
+           <button>X</button>
           </div>
         </div>
 
