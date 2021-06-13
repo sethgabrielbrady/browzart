@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <div class="container" @click="zoom">
       <img
         :src="resImage.primaryImage"
         :class="[isZoomed ? 'zoomedImg' : '', 'primaryImage', isLoading ? 'hide' : '']"
