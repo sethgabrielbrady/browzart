@@ -15,6 +15,7 @@
           <button :class="[isDisabled ? 'disable' : '']" @click="refresh">★</button>
           <button @click="addToFavorites">♡</button>
           <button @click="toggleModal">M</button>
+          <button @click="timeReset" :style="timerOn ? 'background-color:teal;' : ''" >T</button>
         </div>
       </div>
       <div
@@ -57,6 +58,7 @@
 </template>
 
 <script>
+// Refresh image at set time
 // add text to speech API
 // Use Css grid to organize UI components
 
@@ -79,7 +81,8 @@ export default {
       isDisabled: false,
       resImage: '',
       searchValue: "paintings",
-      showModal: false
+      showModal: false,
+      timerOn: false,
       }
   },
   created () {
@@ -154,7 +157,18 @@ export default {
     },
     toggleModal () {
       this.showModal = !this.showModal
-    }
+    },
+    timeReset () {
+      this.toggleTimer();
+      if(this.timerOn){
+        setInterval(function(){
+          this.refresh()
+        }.bind(this), 60000);
+      }
+    },
+    toggleTimer () {
+      this.timerOn = !this.timerOn
+    },
   }
 }
 </script>
@@ -171,7 +185,7 @@ export default {
   opacity: 0.3;
   padding: 4px;
   position: fixed;
-  width: 100px;
+  width: 160px;
  }
 
  .buttonContainer {
