@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container" @click="zoom">
+    <div class="container">
       <img
         :src="resImage.primaryImage"
         :class="[isZoomed ? 'zoomedImg' : '', 'primaryImage', isLoading ? 'hide' : '']"
@@ -58,7 +58,6 @@
 </template>
 
 <script>
-// Refresh image at set time
 // add text to speech API
 // Use Css grid to organize UI components
 
