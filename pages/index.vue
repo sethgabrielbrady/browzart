@@ -6,7 +6,6 @@
         :class="[isZoomed ? 'zoomedImg' : '', 'primaryImage', isLoading ? 'hide' : '']"
         :aria-label="[resImage.title ? resImage.title : 'No img title available.', ]"
       />
-
       <div class="iconbox">
         <div  class="buttonContainer">
           <button @click="zoom">
@@ -34,7 +33,6 @@
           <button :class="[isDisabled ? 'disable' : '']" @click="refresh" style="position:relative; z-index: 1000;">Search</button><br>
           <!-- <button :class="[isDisabled ? 'disable' : '']" @click="refresh">Search</button><br> -->
         </div>
-
         <div class="imagebox">
           <ul style="list-style-type: none;">
             <li v-for="(favorites, index) in favoriteArray">
@@ -44,13 +42,11 @@
             </li>
           </ul>
         </div>
-
         <div class="iconbox">
           <div  class="buttonContainer">
            <button>X</button>
           </div>
         </div>
-
       </div>
     </div>
     <base-spinner v-if="isLoading" />
@@ -185,15 +181,15 @@ export default {
   padding: 4px;
   position: fixed;
   width: 160px;
- }
+}
 
- .buttonContainer {
+.buttonContainer {
   display:flex;
   flex-direction:row;
   justify-content: space-around;
- }
+}
 
- .imagebox {
+.imagebox {
   background-color: rgba(0,0,0);
   right: 0px;
   color:red;
@@ -203,22 +199,22 @@ export default {
   width: 25vw;
   overflow: scroll;
   padding-right: 10vw;
- }
+}
 
- .imagebox:hover {
+.imagebox:hover {
    z-index:100;
    background-image: linear-gradient(to left, rgba(0,0,0,.65), rgba(200,200,200,.15));
     border-radius: 10px;
     -webkit-box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
     box-shadow: 5px 5px 11px 1px rgba(0,0,0,0.57);
- }
+}
 
- .imagebox > ul {
-   display: flex;
-   flex-direction: row;
- }
+.imagebox > ul {
+  display: flex;
+  flex-direction: row;
+}
 
- .thumbPreview {
+.thumbPreview {
   opacity: 0.5
 }
 
