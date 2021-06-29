@@ -54,9 +54,6 @@
 </template>
 
 <script>
-// add text to speech API
-// Use Css grid to organize UI components
-
 import axios from 'axios'
 import BaseSpinner from '../components/BaseSpinner.vue'
 
@@ -78,7 +75,7 @@ export default {
       searchValue: "paintings",
       showModal: false,
       timerOn: false,
-      }
+    }
   },
   created () {
     return this.process();
