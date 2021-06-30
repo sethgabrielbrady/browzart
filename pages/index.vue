@@ -11,7 +11,7 @@
           <button @click="zoom">
             {{ isZoomed ? '✦' : '✥' }}
           </button>
-          <button :class="[isDisabled ? 'disable' : '']" @click="refresh">★</button>
+          <button @click="refresh">★</button>
           <button @click="addToFavorites">♡</button>
           <button @click="toggleModal">M</button>
           <button @click="timeReset" :style="timerOn ? 'background-color:teal;' : ''" >T</button>
@@ -20,7 +20,6 @@
       <div
         class="modal"
         :class="showModal ? '' : 'hide-modal' "
-        @click="toggleModal"
       >
         <div style="text-align:center; position:relative; top:25%;">
           <p class="title" v-if="resImage.title"><b>{{ resImage.title }}</b></p><br>
@@ -31,7 +30,6 @@
           <p v-if="resImage.department" style="font-size: 10px;"><i>{{ "Dept: " + resImage.department}}</i></p><br>
           <input type="text" v-model="searchValue" @keyup="getSearchValue"/>
           <button :class="[isDisabled ? 'disable' : '']" @click="refresh" style="position:relative; z-index: 1000;">Search</button><br>
-          <!-- <button :class="[isDisabled ? 'disable' : '']" @click="refresh">Search</button><br> -->
         </div>
         <div class="imagebox">
           <ul style="list-style-type: none;">
