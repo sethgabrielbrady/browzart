@@ -41,13 +41,13 @@
           </ul>
         </div>
         <div class="iconbox">
-          <div  class="buttonContainer">
-           <button>X</button>
+          <div class="buttonContainer">
+            <button @click="toggleModal">X</button>
           </div>
         </div>
       </div>
     </div>
-    <base-spinner v-if="isLoading" />
+     <base-spinner v-if="isLoading"/>
   </div>
 </template>
 
