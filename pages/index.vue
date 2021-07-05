@@ -14,7 +14,7 @@
           <button @click="refresh">★</button>
           <button @click="addToFavorites">♡</button>
           <button @click="toggleModal">M</button>
-          <button @click="timeReset" :style="timerOn ? 'background-color:teal;' : ''" >T</button>
+          <button @click="picReset" :style="timerOn ? 'background-color:teal;' : ''" >T</button>
         </div>
       </div>
       <div
@@ -148,7 +148,7 @@ export default {
     toggleModal () {
       this.showModal = !this.showModal
     },
-    timeReset () {
+    picReset () {
       this.toggleTimer();
       if(this.timerOn){
         setInterval(function(){
