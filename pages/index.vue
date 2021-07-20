@@ -73,6 +73,7 @@ export default {
       searchValue: "paintings",
       showModal: false,
       timerOn: false,
+      timeAmount: (60000 * 60)
     }
   },
   created () {
@@ -153,7 +154,7 @@ export default {
       if(this.timerOn){
         setInterval(function(){
           this.refresh()
-        }.bind(this), 60000);
+        }.bind(this), this.timeAmount);
       }
     },
     toggleTimer () {
