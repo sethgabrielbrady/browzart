@@ -168,7 +168,7 @@ export default {
     fullscreen () {
       this.isFull = !this.isFull
       const elem = document.getElementById("image");
-      elem.style.cursor = 'none';
+      // elem.style.cursor = 'none';
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
       } else if (elem.webkitRequestFullscreen) { /* Safari */
@@ -177,9 +177,6 @@ export default {
         elem.msRequestFullscreen();
       }
 
-      if (elem.requestFullscreen === true ){
-        this.cursorShow;
-      }
     },
     cursorShow () {
       //add computed to watch for esc key press
@@ -195,6 +192,13 @@ export default {
   }
 }
 </script>
+
+//todo
+//more api
+//cleanup mouse hide
+//add logo somewhere
+//add option to set timer
+//add key for symbols
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@400;600&display=swap');
