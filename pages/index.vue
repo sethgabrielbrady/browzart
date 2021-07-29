@@ -2,6 +2,7 @@
   <div>
     <div class="container">
       <img
+        id="image"
         :src="resImage.primaryImage"
         :class="[isZoomed ? 'zoomedImg' : '', 'primaryImage', isLoading ? 'hide' : '']"
         :aria-label="[resImage.title ? resImage.title : 'No img title available.', ]"
@@ -9,12 +10,14 @@
       <div class="iconbox">
         <div  class="buttonContainer">
           <button @click="zoom">
-            {{ isZoomed ? '✦' : '✥' }}
+            {{ isZoomed ? '➖' : '➕' }}
           </button>
-          <button @click="refresh">★</button>
+          <button @click="refresh">✔️</button>
           <button @click="addToFavorites">♡</button>
-          <button @click="toggleModal">M</button>
-          <button @click="picReset" :style="timerOn ? 'background-color:teal;' : ''" >T</button>
+          <button @click="toggleModal"><b>?</b></button>
+          <button @click="fullscreen"><b>🔲</b></button>
+          <button @click="cursorShow"><b>🖱️</b></button>
+          <!-- <button @click="picReset" :style="timerOn ? 'background-color:teal;' : ''" >T</button> -->
         </div>
       </div>
       <div
@@ -64,6 +67,7 @@ export default {
       favX: 0,
       favoriteCount: 0,
       favoriteArray: [],
+      isFull: false,
       isLoading: false,
       isZoomed: false,
       isMetLogo: false,
@@ -72,6 +76,7 @@ export default {
       resImage: '',
       searchValue: "paintings",
       showModal: false,
+      showCursor: true,
       timerOn: false,
       timeAmount: (60000 * 60)
     }
@@ -160,6 +165,33 @@ export default {
     toggleTimer () {
       this.timerOn = !this.timerOn
     },
+    fullscreen () {
+      this.isFull = !this.isFull
+      const elem = document.getElementById("image");
+      elem.style.cursor = 'none';
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) { /* Safari */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { /* IE11 */
+        elem.msRequestFullscreen();
+      }
+
+      if (elem.requestFullscreen === true ){
+        this.cursorShow;
+      }
+    },
+    cursorShow () {
+      //add computed to watch for esc key press
+      // then unhide cursor
+      this.showCursor = !this.showCursor
+      const elem = document.getElementById("image");
+      if(!!this.showCursor){
+        elem.style.cursor = 'unset';
+      }else {
+        elem.style.cursor = 'none';
+      }
+    }
   }
 }
 </script>
