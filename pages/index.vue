@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <div class="container" @keydown.esc="cursorShow" tabindex="0">
       <img
         id="image"
         :src="resImage.primaryImage"
@@ -16,8 +16,6 @@
           <button @click="addToFavorites">♡</button>
           <button @click="toggleModal"><b>?</b></button>
           <button @click="fullscreen"><b>🔲</b></button>
-          <button @click="cursorShow"><b>🖱️</b></button>
-          <!-- <button @click="picReset" :style="timerOn ? 'background-color:teal;' : ''" >T</button> -->
         </div>
       </div>
       <div
@@ -83,6 +81,14 @@ export default {
   },
   created () {
     return this.process();
+  },
+  computed: {
+    cursorShow () {
+      this.showCursor = true;
+      const elem = document.getElementById("image");
+      elem.style.cursor = 'unset';
+      alert("Cursor is ", this.showCursor)
+    }
   },
   methods: {
     async getPrimaryImage (id) {
@@ -168,7 +174,6 @@ export default {
     fullscreen () {
       this.isFull = !this.isFull
       const elem = document.getElementById("image");
-      // elem.style.cursor = 'none';
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
       } else if (elem.webkitRequestFullscreen) { /* Safari */
@@ -176,18 +181,8 @@ export default {
       } else if (elem.msRequestFullscreen) { /* IE11 */
         elem.msRequestFullscreen();
       }
-
-    },
-    cursorShow () {
-      //add computed to watch for esc key press
-      // then unhide cursor
-      this.showCursor = !this.showCursor
-      const elem = document.getElementById("image");
-      if(!!this.showCursor){
-        elem.style.cursor = 'unset';
-      }else {
-        elem.style.cursor = 'none';
-      }
+      elem.style.cursor = 'none';
+      this.showCursor = false;
     }
   }
 }
